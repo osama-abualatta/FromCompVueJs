@@ -20,7 +20,7 @@ export default {
         return {
             type:'text'
         }
-    }
+    },
     computed: {
         inputListeners() {
             return Object.assign({}, this.listeners, {
