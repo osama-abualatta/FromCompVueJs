@@ -1,6 +1,6 @@
 <template>
     <input
-        type="text"
+        :type="type"
         :id="identity"
         :name="name"
         :value="value"
@@ -13,53 +13,14 @@
 </template>
 <script>
 import Helper from "../../../core/Helper";
+import BaseInput from "../BaseInput";
 export default {
-    props: {
-        group: {
-            type: String,
-            required: false
-        },
-        name: {
-            type: String,
-            required: false
-        },
-        id: {
-            type: String,
-            required: false
-        },
-        value: {
-            default: ""
-        },
-        currentVlue: {
-            default: ""
-        },
-        placeholder: {
-            type: String,
-            required: false
-        },
-        focus: {
-            type: Boolean,
-            default: false
-        },
-        maxlength: {
-            type: String,
-            required: false
-        },
-        autocomplete: {
-            type: String,
-            required: false
-        },
-        validation: {
-            type: [Array, Object],
-            default: () => []
-        }
-    },
-    data() {
+    mixins:[BaseInput ],
+    data(){
         return {
-            identity: this.id ? this.id : this.name,
-            displayValidation: false
-        };
-    },
+            type:'text'
+        }
+    }
     computed: {
         inputListeners() {
             return Object.assign({}, this.listeners, {
@@ -68,28 +29,30 @@ export default {
                 }
             });
         }
+
     },
+
     mounted() {
         this.emit(this.currentVlue);
         this.initialize();
+        this.registerListeners();
     },
     methods: {
-        emit(value) {
-            this.$emit("input", value);
+
+        reset(){
+            this.emit(this.currentVlue);
         },
-        initialize() {
-            if (Helper.isEmpty(this.validation)) {
-                return;
+        clear(){
+            this.emit('');
+        }
+    },
+    watch:{
+        disabled(isDissabled){
+            if(isDisabled){
+                this.disabled();
+            }else{
+                this.enable();
             }
-            let rules = this.validation;
-            if (!Array.isArray(this.validation)) {
-                this.displayValidation = true;
-                rules = Object.keys(this.validation);
-            }
-            EventBus.fire("initialize-" + this.group, {
-                field: this.name,
-                rules: rules
-            });
         }
     }
 };
