@@ -12,7 +12,7 @@
     />
 </template>
 <script>
-import Helper from "../../../core/Helper";
+import Helper from "../../../../core/Helper";
 import BaseInput from "../BaseInput";
 export default {
     mixins:[BaseInput ],
@@ -44,15 +44,6 @@ export default {
         },
         clear(){
             this.emit('');
-        }
-    },
-    watch:{
-        disabled(isDissabled){
-            if(isDisabled){
-                this.disabled();
-            }else{
-                this.enable();
-            }
         }
     }
 };

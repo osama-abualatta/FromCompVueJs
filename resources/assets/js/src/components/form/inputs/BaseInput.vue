@@ -1,12 +1,11 @@
 <script>
-import Helper from "../../Validator/Error";
+import Error from "../Validator/Error";
 import Helper from "../../../core/Helper";
-import Helper from "../../../mixins/Disabler";
-import Helper from "../validator/validation";
+import Disabler from "../../../mixins/Disabler";
+import Validation from "../validator/Validation";
 
 export default {
     computed: {
-
         isInvalid() {
             return this.error.has(this.name);
         },
@@ -24,7 +23,7 @@ export default {
                     [this.wrapperErrorCssClass]: this.isInvalid
                 },
                 this.wrapperCssClass
-            ]
+            ];
         },
         computedValidationCssStyle() {
             return [
@@ -32,7 +31,7 @@ export default {
                     [this.wrapperErrorCssStyle]: this.isInvalid
                 },
                 this.wrapperCssClass
-            ]
+            ];
         }
     },
     props: {
@@ -73,6 +72,38 @@ export default {
         validation: {
             type: [Array, Object],
             default: () => []
+        },
+        error: {
+            type: Object,
+            default: () => new Error()
+        },
+        visible: {
+            type: Boolean,
+            default: true
+        },
+        inputCssClass: {
+            type: String,
+            required: false
+        },
+        validationCssClass: {
+            type: String,
+            required: false
+        },
+        wrapperErrorCssClass: {
+            type: String,
+            default: "invalid"
+        },
+        wrapperErrorCssStyle: {
+            type: String,
+            required: false
+        },
+        listen: {
+            type: String,
+            required: false
+        },
+        fire: {
+            type: String,
+            required: false
         }
     },
     data() {
@@ -81,5 +112,49 @@ export default {
             displayValidation: false
         };
     },
+    methods: {
+        emit(value, event = "input") {
+            this.emitFireEvent(value);
+            this.$emit("input", value);
+        },
+        emitFireEvent(value) {
+            if (this.fire) {
+                EventBus.fire(this.fire, value);
+            }
+        },
+        initialize() {
+            if (Helper.isEmpty(this.validation)) {
+                return;
+            }
+            let rules = this.validation;
+            if (!Array.isArray(this.validation)) {
+                this.displayValidation = true;
+                rules = Object.keys(this.validation);
+            }
+            EventBus.fire("initialize-" + this.group, {
+                field: this.name,
+                rules: rules
+            });
+        },
+        registerListeners() {
+            EventBus.listen("reset-form-" + this.group, this.reset);
+            EventBus.listen("reset-form-" + this.group, this.clear);
+        },
+        reset() {
+            console.log("please provide reset method");
+        },
+        clear() {
+            console.log("please provide reset clear");
+        }/*,
+        watch: {
+            disabled(isDissabled) {
+                if (isDisabled) {
+                    this.disabled();
+                } else {
+                    this.enable();
+                }
+            }
+        }*/
+    }
 };
 </script>

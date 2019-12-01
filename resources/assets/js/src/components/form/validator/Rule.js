@@ -1,4 +1,4 @@
-import Helper from "../../core/Helper";
+import Helper from "../../../core/Helper";
 
 export default class Rule {
     static required(value) {

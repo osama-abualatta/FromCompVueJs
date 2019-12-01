@@ -1,19 +1,28 @@
 <template>
-    <form v-on:submit.prevent="submit" novalidate>
-        <slot
-            :group="group"
-            :fields="fields"
-            :validation="validationBag"
-            :error="error"
-            :submit="submit"
-        ></slot>
-    </form>
+    <div>
+        <form v-on:submit.prevent="submit" novalidate>
+            <slot
+                :group="group"
+                :fields="fields"
+                :validation="validationBag"
+                :error="error"
+                :submit="submit"
+                :enable="enable"
+                :disable="disable"
+                :processing="processing"
+                :isDisabled="isDisabled"
+            ></slot>
+        </form>
+    </div>
 </template>
 <script>
-import  Error  from "./validator/Error";
-import  Validator  from "./validator/Validator";
-import  Rule  from "./validator/Rule";
+import Behaviour from "./Behaviour";
+import Error from "./validator/Error";
+import Disabler from "../../mixins/Disabler";
+import Validator from "./validator/Validator";
+import AjaxCaller from "../../mixins/AjaxCaller";
 export default {
+    mixins: [AjaxCaller, Disabler],
     props: {
         group: {
             type: String,
@@ -22,23 +31,50 @@ export default {
         behaviour: {
             type: String,
             required: false
+        },
+        eventSubmitOnly: {
+            type: Boolean,
+            default: false
+        },
+        collections: {
+            type: Object,
+            default: () => {
+                return {};
+            }
         }
     },
     data() {
         return {
-            fields: {},
+            fields: {...this.collections},
             validationBag: {},
-            error: new Error
+            error: new Error,
         };
     },
+    computed: {
+        requestData() {
+            return this.fields;
+        }
+    },
     created() {
+        EventBus.listen("submit-" + this.group, this.submitEvent);
         EventBus.listen("initialize-" + this.group, this.initiallize);
+        EventBus.listen("reset-" + this.group, this.reset);
+        EventBus.listen("clear-" + this.group, this.clear);
     },
     methods: {
+        submitEvent(data) {
+
+        },
         initiallize(data) {
             if (!this.validationBag.hasOwnProperty(data.field)) {
                 this.validationBag[data.field] = data.rules;
             }
+        },
+        reset(data) {
+
+        },
+        clear(data) {
+
         },
         submit() {
             this.validate()
@@ -52,7 +88,7 @@ export default {
                     return;
                 }
 
-                this.error = new Error;
+                this.error = new Error();
 
                 new Validator(this, resolve, reject);
             });

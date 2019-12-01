@@ -2,7 +2,11 @@
 
 @section('content')
 
-<form-wrapper group="update-form" v-cloak>
+<form-wrapper group="update-form"
+group="update-form"
+action="{{ route('main.store') }}"
+:collections="{ address: {}, colours: [], fruit: [] }"
+v-cloak>
     <div slot-scope="props">
         <fieldset class="fieldset">
             <legend>Personal Details</legend>
@@ -17,9 +21,13 @@
                         maxlength="9"
                         autocomplete="given-name"
                         :validation="{
+                            'required':'please provide your first name',
                             'min:2':'minmum length: 2 char',
                             'max:30':'maximum length: 30 char'
                         }"
+                        :error="props.error"
+                        current-value="Sebastian"
+                        :disabled="props.isDisabled"
                    > </text-input>
                 </div>
                 <div class="cell small-12 medium-6">
@@ -33,7 +41,28 @@
                             :validation="['min:2','max:30']"
                        > </text-input>
             </div>
+            <div class="cell small-12 medium-6">
+                    <number-input
+                        :group="props.group"
+                        name="phone_number"
+                        v-model="props.fields.phone_number"
+                        placeholder="phone number"
+                        maxlength="9"
+                        :validation="['min:2','max:30']"
+                   > </number-input>
+        </div>
+        <div class="cell small-12 medium-6">
+                <password-input
+                    :group="props.group"
+                    name="password"
+                    v-model="props.fields.password"
+                    placeholder="password"
+                    maxlength="9"
+                    :validation="['min:2','max:30']"
+               > </password-input>
+    </div>
         </fieldset>
+        @include('template.partials.form-buttons-detached')
     </div>
 </form-wrapper>
 

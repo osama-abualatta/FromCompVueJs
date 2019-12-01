@@ -11,5 +11,5 @@ if (token) {
 }
 
 window.Vue = require('vue');
-import EventBus from'./src/components/core/EventBus';
+import EventBus from'./src/core/EventBus';
 window.EventBus=new EventBus;
