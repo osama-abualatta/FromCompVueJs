@@ -62,7 +62,7 @@ v-cloak>
                > </password-input>
     </div>
         </fieldset>
-        @include('template.partials.form-buttons-detached')
+        @include('template.partials.form-button-detached')
     </div>
 </form-wrapper>
 

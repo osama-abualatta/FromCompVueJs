@@ -9,9 +9,9 @@
     </span>
 </template>
 <script>
-//import Disabler from "../../mixins/Disabled";
+import Disabler from "../../mixins/Disabler";
 export default {
-  //  mixins: [disabler],
+ mixins: [Disabler],
     props: {
         group: {
             type: String,
