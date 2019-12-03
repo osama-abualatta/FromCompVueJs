@@ -16,8 +16,7 @@ class MainController extends Controller
      */
     public function index(): View
     {
-        $group="update-form";
-        return view('main.index',compact('group'));
+        return view('main.index');
     }
 
     /**

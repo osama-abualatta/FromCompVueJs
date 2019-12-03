@@ -2,10 +2,14 @@
 
 @section('content')
 
+
+@include('template.partials.form-buttons-detached',['group' => "update-form"])
+
 <form-wrapper group="update-form"
 group="update-form"
 action="{{ route('main.store') }}"
 :collections="{ address: {}, colours: [], fruit: [] }"
+behaviour="confirmWithDialogAndClear"
 v-cloak>
     <div slot-scope="props">
         <fieldset class="fieldset">
@@ -51,7 +55,7 @@ v-cloak>
                         maxlength="9"
                         :validation="['min:2','max:30']"
                    > </number-input>
-        </div>
+
         <div class="cell small-12 medium-6">
                 <password-input
                     :group="props.group"
@@ -107,7 +111,8 @@ v-cloak>
 
     </div>
         </fieldset>
-        <fieldset class="fieldset">
+
+     <!--<fieldset class="fieldset">
                 <legend>Colours (exactly 2 items)</legend>
 
                     <validation
@@ -135,9 +140,10 @@ v-cloak>
 
                     ></checkbox-group-input>
 
-                    </fieldset>
-    </div>
-        @include('template.partials.form-buttons-attached')
+                    </fieldset>-->
+
+                    @include('template.partials.form-buttons-attached')
+                </div>
     </div>
 </form-wrapper>
 

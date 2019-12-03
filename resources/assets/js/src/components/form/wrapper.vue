@@ -7,6 +7,8 @@
                 :validation="validationBag"
                 :error="error"
                 :submit="submit"
+                :reset="reset"
+                :clear="clear"
                 :enable="enable"
                 :disable="disable"
                 :processing="processing"
@@ -137,7 +139,7 @@ export default {
 
                 this.error = new Error();
 
-                new Validator(this, resolve, reject);
+              //  new Validator(this, resolve, reject);
             });
         },
         requiresValidation() {

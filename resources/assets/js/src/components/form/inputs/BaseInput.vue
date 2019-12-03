@@ -5,6 +5,8 @@ import Disabler from "../../../mixins/Disabler";
 import Validation from "../validator/Validation";
 
 export default {
+      mixins:[Disabler ],
+      components:{'validation':Validation},
     computed: {
         isInvalid() {
             return this.error.has(this.name);
@@ -17,7 +19,7 @@ export default {
                 [this.validationCssClass]: this.isInvalid
             };
         },
-        computedwrapperCssClass() {
+        computedWarpperCssClass() {
             return [
                 {
                     [this.wrapperErrorCssClass]: this.isInvalid
@@ -32,10 +34,17 @@ export default {
                 },
                 this.wrapperCssClass
             ];
+        },
+        computedWrapperCssStyle(){
+            return {[this.wrapperErrorCssStyle]:this.isInvaled }
         }
     },
     props: {
         group: {
+            type: String,
+            required: false
+        },
+          label: {
             type: String,
             required: false
         },
@@ -117,23 +126,6 @@ export default {
             show: this.visible
         };
     },
-    computed :{
-        isInvaled(){
-            return this.error.has(this.name);
-        },
-        showValidation(){
-            return this.isInvaled && this.displayValidation;
-        },
-        computedValidationCssClass(){
-            return {[this.validationCssClass]:this.isInvaled }
-        },
-        computedWrapperCssClass(){
-            return {[this.wrapperErrorCssClass]:this.isInvaled }
-        },
-        computedWrapperCssStyle(){
-            return {[this.wrapperErrorCssStyle]:this.isInvaled }
-        }
-    },
     methods: {
         emit(value, event = "input") {
             this.emitFireEvent(value);
@@ -173,15 +165,6 @@ export default {
         },
         clear() {
             console.log("please provide reset clear");
-        },
-        watch: {
-            disabled(isDissabled) {
-                if (isDisabled) {
-                    this.disabled();
-                } else {
-                    this.enable();
-                }
-            }
         }
     }
 };

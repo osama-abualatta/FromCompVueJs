@@ -46,5 +46,14 @@ export default {
             this.emit('');
         }
     }
+       , watch: {
+            disabled(isDissabled) {
+                if (isDisabled) {
+                    this.disabled();
+                } else {
+                    this.enable();
+                }
+            }
+        }
 };
 </script>

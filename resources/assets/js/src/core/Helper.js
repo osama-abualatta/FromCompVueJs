@@ -1,6 +1,6 @@
 export default class Helper{
     static isEmpty(value){
-if (Helper.isobject(value)){
+if (Helper.isObject(value)){
     return Object.keys(value).length===0;
 }
 return (
@@ -9,7 +9,7 @@ return (
     value.length===0
 );
     }
-    static isobject(value){
+    static isObject(value){
 return value instanceof Object && !Array.isArray(value);
     }
     static removeObjectProperties (wrapper,indexes, obj,parentKey){

@@ -5,7 +5,7 @@
       <span
         :class="cssClass"
         v-for="(message, rule) in validation"
-        :key="message"
+        :key="message.id"
         v-show="showError(rule)"
         v-text="message"
       ></span>

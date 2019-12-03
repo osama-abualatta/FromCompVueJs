@@ -1,12 +1,14 @@
 <template>
 
-<div v-show="show" class="checkedbox-group-item" :class="computedWarpperCssClass" :style="computedWrapperCssStyle">
+<div v-show="show" class="checkedbox-group-item"
+:class="computedWarpperCssClass"
+ :style="computedWrapperCssStyle">
 <input
 type="checkbox"
-:id="idendity"
+:id="identity"
 :name="name"
 :disabled="isDisabled"
-:autocomplete="autocomplate"
+:autocomplete="autocomplete"
 :class="inputCssClass"
 v-model="checked"
 @change="update"
@@ -28,9 +30,9 @@ v-model="checked"
 <script>
 import BaseInput from "../../BaseInput";
 export default {
-
+mixins :[BaseInput],
 props:{
-    mixins :[BaseInput],
+
     removeWhenFalse:{
         type:Boolean,
         default:false
@@ -54,7 +56,7 @@ props:{
     },
     mounted(){
         this.update();
-        this.initialized();
+        this.initialize();
         this.registerListeners();
         this.registerCustomListener();
     },
