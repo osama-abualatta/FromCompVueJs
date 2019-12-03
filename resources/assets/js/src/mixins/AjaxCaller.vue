@@ -1,5 +1,7 @@
 <script>
+import Processor from"./Processor";
 export default {
+    mixins:[Processor],
   props: {
     action: {
       type: String,
@@ -10,11 +12,7 @@ export default {
       default: "post"
     }
   },
-  data() {
-    return {
-      processing: false
-    };
-  },
+
   computed: {
     endPoint() {
       return this.action;
@@ -29,12 +27,12 @@ export default {
       this.makeAjaxRequest(success, failure);
     },
     startProcessingAjaxCall() {
-      this.processing = true;
+      this.startProcessing();
       this.startProcessingAjaxCallEvent();
     },
     startProcessingAjaxCallEvent() {},
     stopProcessingAjaxCall() {
-      this.processing = false;
+      this.stopProcessing();
       this.stopProcessingAjaxCallEvent();
     },
     stopProcessingAjaxCallEvent() {},

@@ -1,30 +1,25 @@
 <script>
-import Trigger from './Trigger';
+import Trigger from "./Trigger";
 export default {
-    mixins:[Trigger],
-    props:{
-        fire:{
-            type:String,
-            required:true
-        },
-    },
-    created(){
-       EventBus.listen('submission-started-' + this.group, ()=>{
-           if(this.isSubmit){
-              this.processing = true;
-           }
-       }) ;
-       EventBus.listen('submission-ended-' + this.group, ()=>{
-             this.processing = false;
-    });
-},
-methods:{
-    trigger(){
-        if(this.isDisabled){
-            return;
+    mixins: [Trigger],
+    props: {
+        fire: {
+            type: String,
+            required: true
         }
-        EventBus.fire(this.fire + '-' + this.group);
+    },
+    created() {
+        EventBus.listen(
+            "submission-started-" + this.group,
+            this.startProcessing
+        );
+        EventBus.listen("submission-ended-" + this.group, this.stopProcessing);
+    },
+    methods: {
+        trigger() {
+
+            EventBus.fire(this.fire + "-" + this.group);
+        }
     }
-}
-}
+};
 </script>

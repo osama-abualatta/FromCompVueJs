@@ -28,6 +28,7 @@ v-cloak>
                         :error="props.error"
                         current-value="Sebastian"
                         :disabled="props.isDisabled"
+                        class="test-class"
                    > </text-input>
                 </div>
                 <div class="cell small-12 medium-6">
@@ -61,8 +62,82 @@ v-cloak>
                     :validation="['min:2','max:30']"
                > </password-input>
     </div>
+</fieldset>
+    <fieldset class="fieldset">
+    <legend>Consents</legend>
+    <div class="checked-group">
+        <checkbox-input
+        :group="props.group"
+        name="share"
+        label="please share my data with thrid party"
+        v-model="props.fields.share"
+        :validation="{
+            'required' : 'Invalid selected',
+            'in:a':  'we have to share your data'
+        }"
+        :error="props.error"
+        current-value="a"
+        true-value="a"
+        false-value="b"
+        validation-css-class="block"
+        ></checkbox-input>
+        <checkbox-input
+        :group="props.group"
+        name="privacy"
+        label="i agree with the privacy policy"
+        v-model="props.fields.privacy"
+        :validation="{
+            'required' : 'you have to agree with our privacy policy'
+                     }"
+        :error="props.error"
+        :remove-when-false="true"
+        validation-css-class="block"
+        ></checkbox-input>
+        <checkbox-input
+        :group="props.group"
+        name="terms"
+        label="I agree with the terms & conditions"
+        v-model="props.fields.terms"
+        :validation="{
+            'accepted' : 'you have to agree our terms & conditions'
+        }"
+        :error="props.error"
+         validation-css-class="block"
+        ></checkbox-input>
+
+    </div>
         </fieldset>
-        @include('template.partials.form-button-detached')
+        <fieldset class="fieldset">
+                <legend>Colours (exactly 2 items)</legend>
+
+                    <validation
+                    :id="colours"
+                    name="colours"
+                    :show="props.error.has('colours')"
+                    :validation="{
+                        'required' : 'please select exactly 2 items',
+                        'min:2' : 'please select exactly 2 items',
+                        'max:2' : 'please select exactly 2 items'
+                    }"
+                    :error="props.error"
+                    css-class="block"
+                    ></validation>
+                    <checkbox-group-input
+                    :group="props.group"
+                    name="colours"
+                    current-value="['blue']"
+                    :options="[
+                        {name:'Blue',value:'blue'}, {name:'Green',value:'green'}, {name:'Orange',value:'orange'}
+                    ]"
+                    v-model="props.fields.colours"
+                    :validation="['required','min:2','max:2']"
+                    :error="props.error"
+
+                    ></checkbox-group-input>
+
+                    </fieldset>
+    </div>
+        @include('template.partials.form-buttons-attached')
     </div>
 </form-wrapper>
 

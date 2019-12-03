@@ -13,3 +13,6 @@ Vue.component('password-input',require('./src/components/form/inputs/input/Passw
 Vue.component('text-input',require('./src/components/form/inputs/input/Text').default);
 Vue.component('time-input',require('./src/components/form/inputs/input/Time').default);
 
+Vue.component('checkbox-input',require('./src/components/form/inputs/input/CheckBox/CheckBox').default);
+Vue.component('checkbox-group-input',require('./src/components/form/inputs/input/CheckBox/CheckBoxGroup').default);
+Vue.component('master-checkbox-input',require('./src/components/form/inputs/input/CheckBox/MasterCheckBox').default);

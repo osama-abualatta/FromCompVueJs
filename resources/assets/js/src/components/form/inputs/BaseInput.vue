@@ -53,6 +53,10 @@ export default {
         currentVlue: {
             default: ""
         },
+        options:{
+          type:[Array,Object,String],
+          default: ()=>[]
+        },
         placeholder: {
             type: String,
             required: false
@@ -109,8 +113,26 @@ export default {
     data() {
         return {
             identity: this.id ? this.id : this.name,
-            displayValidation: false
+            displayValidation: false,
+            show: this.visible
         };
+    },
+    computed :{
+        isInvaled(){
+            return this.error.has(this.name);
+        },
+        showValidation(){
+            return this.isInvaled && this.displayValidation;
+        },
+        computedValidationCssClass(){
+            return {[this.validationCssClass]:this.isInvaled }
+        },
+        computedWrapperCssClass(){
+            return {[this.wrapperErrorCssClass]:this.isInvaled }
+        },
+        computedWrapperCssStyle(){
+            return {[this.wrapperErrorCssStyle]:this.isInvaled }
+        }
     },
     methods: {
         emit(value, event = "input") {
@@ -140,12 +162,18 @@ export default {
             EventBus.listen("reset-form-" + this.group, this.reset);
             EventBus.listen("reset-form-" + this.group, this.clear);
         },
+        optionId(option){
+            if(option.id){
+                return option.id;
+            }
+           return this.name + '-' + option.value;
+        },
         reset() {
             console.log("please provide reset method");
         },
         clear() {
             console.log("please provide reset clear");
-        }/*,
+        },
         watch: {
             disabled(isDissabled) {
                 if (isDisabled) {
@@ -154,7 +182,7 @@ export default {
                     this.enable();
                 }
             }
-        }*/
+        }
     }
 };
 </script>
